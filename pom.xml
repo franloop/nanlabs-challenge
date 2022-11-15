@@ -8,6 +8,7 @@
 		<version>2.7.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.nanlab.challenge.spacex</groupId>
 	<artifactId>task-management-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -41,6 +42,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
