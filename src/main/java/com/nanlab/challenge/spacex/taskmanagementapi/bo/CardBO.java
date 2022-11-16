@@ -38,14 +38,12 @@ public class CardBO {
         //determinar tipo de card
         switch (cardRequestDTO.getType())
         {
-            //issues must be on TO-DO list without assignament
             case "issue":
                 this.customizeIssue(cardRequestDTO);
             break;
             case "bug":
                 this.customizeBug(cardRequestDTO, labels, members);
             break;
-            //task only have to be assigned to a label that match with the request category
             case "task":
                 this.customizeTask(cardRequestDTO, labels);
             break;
@@ -57,15 +55,20 @@ public class CardBO {
         return cardService.createCard(cardRequestDTO);
     }
 
-
+    //issues must be on TO-DO list without assignament
     private void customizeIssue(CardRequestDTO cardRequestDTO)
     {
-
+        //No need of customization as base construction makes an issue.
     }
 
+    //task only have to be assigned to a label that match with the request category
     private void customizeTask(CardRequestDTO cardRequestDTO,  List<Label> labels)
     {
-
+        cardRequestDTO.setLabels(
+                Collections.singletonList(
+                    this.getLabel(labels,cardRequestDTO.getCategory())
+                )
+        );
     }
 
     //method for customize the card with the bug behavior
@@ -76,16 +79,16 @@ public class CardBO {
     {
         String[] descriptionWords = cardRequestDTO.getDescription().split(" ");
 
-        StringBuilder title = new StringBuilder("Bug-")
-                .append(descriptionWords[this.getRandom(descriptionWords.length)])
-                .append("-")
-                .append(this.getRandom(Integer.MAX_VALUE));
+        String title = "Bug-"
+                            + descriptionWords[this.getRandom(descriptionWords.length)]
+                            + "-"
+                            + this.getRandom(Integer.MAX_VALUE);
 
-        cardRequestDTO.setTitle(title.toString());
+        cardRequestDTO.setTitle(title);
 
         cardRequestDTO.setLabels(
                 Collections.singletonList(
-                        this.getBugLabel(labels)
+                        this.getLabel(labels, "BUG")
                 )
         );
 
@@ -97,13 +100,13 @@ public class CardBO {
     }
 
     //filters the collections of label looking for anything that match with 'BUG' label
-    private Label getBugLabel(List<Label> labels)
+    private Label getLabel(List<Label> labels, String type)
     {
         if (labels != null && labels.size()>0)
         {
             //Looking for any label with the BUG name. If none found, return null (case not covered)
             return labels.stream().filter(
-                        label -> label.getName().equalsIgnoreCase("BUG")
+                        label -> label.getName().equalsIgnoreCase(type)
                     ).findFirst().orElse(null);
         }
 

@@ -14,8 +14,11 @@ public class CardRequestDTO {
     private String title;
 
     @NotBlank(message = "Type must be defined. Available options are: issue, bug, task")
-    @Pattern(message = "Wrong type. Available options are: issue, bug, task", regexp = "issue|bug|task")
+    @Pattern(message = "Wrong type. Available options are: issue, bug, task", regexp = "(?i)issue|bug|task")
     private String type;
+
+    @Pattern(message = "Wrong category. Available options are: Maintance, Research, Test", regexp = "(?i)maintance|research|test")
+    private String category;
 
     private String description;
 

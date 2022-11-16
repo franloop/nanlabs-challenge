@@ -1,0 +1,334 @@
+{
+	"info": {
+		"_postman_id": "46e7e67f-7129-4062-b764-67655adcda5b",
+		"name": "Nanlabs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16001643"
+	},
+	"item": [
+		{
+			"name": "TrelloAPI",
+			"item": [
+				{
+					"name": "Get info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.trello.com/1/members/me/boards?key=f78d7dd358f04bc24ef78992c725bd51&token=ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60",
+							"protocol": "https",
+							"host": [
+								"api",
+								"trello",
+								"com"
+							],
+							"path": [
+								"1",
+								"members",
+								"me",
+								"boards"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "f78d7dd358f04bc24ef78992c725bd51"
+								},
+								{
+									"key": "token",
+									"value": "ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list board",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.trello.com/1/boards/6374410ebc236e01da0c419b/lists?key=f78d7dd358f04bc24ef78992c725bd51&token=ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60",
+							"protocol": "https",
+							"host": [
+								"api",
+								"trello",
+								"com"
+							],
+							"path": [
+								"1",
+								"boards",
+								"6374410ebc236e01da0c419b",
+								"lists"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "f78d7dd358f04bc24ef78992c725bd51"
+								},
+								{
+									"key": "token",
+									"value": "ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60"
+								},
+								{
+									"key": "idBoard",
+									"value": "6374410ebc236e01da0c419c",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get labels on a board",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.trello.com/1/boards/6374410ebc236e01da0c419b/labels?key=f78d7dd358f04bc24ef78992c725bd51&token=ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60",
+							"protocol": "https",
+							"host": [
+								"api",
+								"trello",
+								"com"
+							],
+							"path": [
+								"",
+								"1",
+								"boards",
+								"6374410ebc236e01da0c419b",
+								"labels"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "f78d7dd358f04bc24ef78992c725bd51"
+								},
+								{
+									"key": "token",
+									"value": "ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60"
+								},
+								{
+									"key": "idBoard",
+									"value": "6374410ebc236e01da0c419c",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get members on a board",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.trello.com/1/boards/6374410ebc236e01da0c419b/memberships?key=f78d7dd358f04bc24ef78992c725bd51&token=ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60",
+							"protocol": "https",
+							"host": [
+								"api",
+								"trello",
+								"com"
+							],
+							"path": [
+								"1",
+								"boards",
+								"6374410ebc236e01da0c419b",
+								"memberships"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "f78d7dd358f04bc24ef78992c725bd51"
+								},
+								{
+									"key": "token",
+									"value": "ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60"
+								},
+								{
+									"key": "idBoard",
+									"value": "6374410ebc236e01da0c419c",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Card",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "key",
+									"value": "f78d7dd358f04bc24ef78992c725bd51",
+									"type": "text"
+								},
+								{
+									"key": "token",
+									"value": "ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60",
+									"type": "text"
+								},
+								{
+									"key": "idList",
+									"value": "6374410ebc236e01da0c41a2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.trello.com/1/cards",
+							"protocol": "https",
+							"host": [
+								"api",
+								"trello",
+								"com"
+							],
+							"path": [
+								"1",
+								"cards"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "App",
+			"item": [
+				{
+					"name": "IssueRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\":\"issUe\",\r\n    \"title\":\"Send Message\",\r\n    \"description\":\"Let pilots send messages to central\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080",
+							"host": [
+								"localhost"
+							],
+							"port": "8080"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BugRequest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\":\"bug\",\r\n    \"description\":\"Let pilots send messages to central\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080",
+							"host": [
+								"localhost"
+							],
+							"port": "8080"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TaskRequest/Maintance",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\":\"task\",\r\n    \"title\" : \"clean logs\",\r\n    \"category\":\"mainTancE\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080",
+							"host": [
+								"localhost"
+							],
+							"port": "8080"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TaskRequest/Test",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\":\"task\",\r\n    \"title\": \"Validate input\",\r\n    \"category\":\"test\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080",
+							"host": [
+								"localhost"
+							],
+							"port": "8080"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TaskRequest/Research",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\":\"task\",\r\n    \"title\": \"Optimice code\",\r\n    \"category\":\"reseArch\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080",
+							"host": [
+								"localhost"
+							],
+							"port": "8080"
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

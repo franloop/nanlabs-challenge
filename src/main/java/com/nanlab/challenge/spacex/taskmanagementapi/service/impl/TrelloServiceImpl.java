@@ -24,6 +24,8 @@ public class TrelloServiceImpl implements CardService {
     static final String API_URL = "https://api.trello.com";
     static final String ENDPOINT_CARD = "/1/cards";
     static final String ENDPOINT_BOARD = "/1/boards/";
+
+    //TODO:Externalizar
     static final String TODO_LIST_ID = "6374410ebc236e01da0c41a2";
     static final String API_KEY = "f78d7dd358f04bc24ef78992c725bd51";
     static final String API_TOKEN = "ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60";
@@ -34,6 +36,15 @@ public class TrelloServiceImpl implements CardService {
     {
         logger.info("Invoking external API for creating Card");
 
+        String labelsIds = "";
+        String membersIds = "";
+
+        if (request.getLabels() != null)
+            labelsIds = request.getLabels().stream().map(Label::getId).collect(Collectors.joining(","));
+
+        if (request.getMembers() != null)
+            membersIds = request.getMembers().stream().map(Member::getIdMember).collect(Collectors.joining(","));
+
         HttpResponse<JsonNode> response = Unirest.post(API_URL + ENDPOINT_CARD)
                 .header("Accept", "application/json")
                 .queryString("key", API_KEY)
@@ -41,8 +52,8 @@ public class TrelloServiceImpl implements CardService {
                 .queryString("idList", TODO_LIST_ID)
                 .queryString("name", request.getTitle())
                 .queryString("desc", request.getDescription())
-                .queryString("idLabels", request.getLabels().stream().map(Label::getId).collect(Collectors.joining(",")))
-                .queryString("idMembers", request.getMembers().stream().map(Member::getIdMember).collect(Collectors.joining(",")))
+                .queryString("idLabels",labelsIds)
+                .queryString("idMembers", membersIds)
                 .asJson();
 
         logger.debug("Response status: {}", response.getStatus());
