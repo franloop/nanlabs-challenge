@@ -10,8 +10,8 @@ import kong.unirest.Unirest;
 import kong.unirest.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,17 +19,23 @@ import java.util.stream.Collectors;
 @Service
 public class TrelloServiceImpl implements CardService {
 
-    Logger logger = LoggerFactory.getLogger(TrelloServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(TrelloServiceImpl.class);
 
-    static final String API_URL = "https://api.trello.com";
-    static final String ENDPOINT_CARD = "/1/cards";
-    static final String ENDPOINT_BOARD = "/1/boards/";
+    private static final String API_URL = "https://api.trello.com";
+    private static final String ENDPOINT_CARD = "/1/cards";
+    private static final String ENDPOINT_BOARD = "/1/boards/";
 
     //TODO:Externalizar
-    static final String TODO_LIST_ID = "6374410ebc236e01da0c41a2";
-    static final String API_KEY = "f78d7dd358f04bc24ef78992c725bd51";
-    static final String API_TOKEN = "ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60";
-    static final String DEFAULT_BOARD = "6374410ebc236e01da0c419b";
+    private static final String TODO_LIST_ID = "6374410ebc236e01da0c41a2";
+
+    @Value("${trello.api.key}")
+    private final String API_KEY = "f78d7dd358f04bc24ef78992c725bd51";
+
+    @Value("${trello.api.token}")
+    private final String API_TOKEN = "ab63d44e75eb78b3bb3674bad294aa48b3f9d7f6b7ea60abb07e784d39e01d60";
+
+    @Value("${trello.api.board}")
+    private final String DEFAULT_BOARD = "6374410ebc236e01da0c419b";
 
     @Override
     public String createCard(CardRequestDTO request)
