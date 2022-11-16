@@ -4,17 +4,15 @@ import com.nanlab.challenge.spacex.taskmanagementapi.dto.CardRequestDTO;
 import com.nanlab.challenge.spacex.taskmanagementapi.dto.Label;
 import com.nanlab.challenge.spacex.taskmanagementapi.dto.Member;
 import com.nanlab.challenge.spacex.taskmanagementapi.service.CardService;
-import com.nanlab.challenge.spacex.taskmanagementapi.service.impl.TrelloServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
 public class CardBO {
-    Logger logger = LoggerFactory.getLogger(CardBO.class);
+    private Logger logger = LoggerFactory.getLogger(CardBO.class);
 
     private final CardService cardService;
 

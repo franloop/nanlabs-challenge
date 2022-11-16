@@ -1,7 +1,8 @@
 package com.nanlab.challenge.spacex.taskmanagementapi.controller;
 import com.nanlab.challenge.spacex.taskmanagementapi.bo.CardBO;
 import com.nanlab.challenge.spacex.taskmanagementapi.dto.CardRequestDTO;
-import com.nanlab.challenge.spacex.taskmanagementapi.util.TaskManagementProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,10 +17,7 @@ import java.util.Map;
 @RestController
 public class TaskManagementController 
 {
-
-    @Autowired
-    private TaskManagementProperties taskManagementProperties;
-
+    private Logger logger = LoggerFactory.getLogger(TaskManagementController.class);
     private final CardBO cardBO;
 
     @Autowired
