@@ -1,18 +1,22 @@
 package com.nanlab.challenge.spacex.taskmanagementapi.service.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nanlab.challenge.spacex.taskmanagementapi.dto.BoardList;
 import com.nanlab.challenge.spacex.taskmanagementapi.dto.CardRequestDTO;
 import com.nanlab.challenge.spacex.taskmanagementapi.dto.Label;
 import com.nanlab.challenge.spacex.taskmanagementapi.dto.Member;
+import com.nanlab.challenge.spacex.taskmanagementapi.exception.RemoteServiceException;
 import com.nanlab.challenge.spacex.taskmanagementapi.service.CardService;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
-import kong.unirest.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +28,6 @@ public class TrelloServiceImpl implements CardService {
     private static final String API_URL = "https://api.trello.com";
     private static final String ENDPOINT_CARD = "/1/cards";
     private static final String ENDPOINT_BOARD = "/1/boards/";
-
-    //TODO:Externalizar
-    private static final String TODO_LIST_ID = "6374410ebc236e01da0c41a2";
 
     @Value("${trello.api.key}")
     private final String API_KEY = "f78d7dd358f04bc24ef78992c725bd51";
@@ -55,7 +56,7 @@ public class TrelloServiceImpl implements CardService {
                 .header("Accept", "application/json")
                 .queryString("key", API_KEY)
                 .queryString("token", API_TOKEN)
-                .queryString("idList", TODO_LIST_ID)
+                .queryString("idList", request.getBoardList().getId())
                 .queryString("name", request.getTitle())
                 .queryString("desc", request.getDescription())
                 .queryString("idLabels",labelsIds)
@@ -70,28 +71,49 @@ public class TrelloServiceImpl implements CardService {
         return null;
     }
 
-    public List<Label> getLabels()
-    {
+    public List<Label> getLabels() throws JsonProcessingException, RemoteServiceException {
         logger.info("Invoking external API for get labels");
         HttpResponse<JsonNode> response = Unirest.get(API_URL + ENDPOINT_BOARD + DEFAULT_BOARD + "/labels")
+                .queryString("key", API_KEY)
+                .queryString("token", API_TOKEN)
+                .asJson();
+        logger.debug("Response status: {}", response.getStatus());
+
+        //TODO: see if can be variable instance (threadsafe)
+        ObjectMapper mapper = new ObjectMapper();
+        List<Label> list = null;
+
+        if (response.isSuccess())
+            list = Arrays.asList(mapper.readValue(response.getBody().toString(), Label[].class));
+        else
+            throw new RemoteServiceException(response.getStatus(), "Can not get Labels from External API.");
+
+        return list;
+    }
+
+    public List<BoardList> getBoardList() throws JsonProcessingException, RemoteServiceException {
+        logger.info("Invoking external API for get BoardList");
+        HttpResponse<JsonNode> response = Unirest.get(API_URL + ENDPOINT_BOARD + DEFAULT_BOARD + "/lists")
                 .queryString("key", API_KEY)
                 .queryString("token", API_TOKEN)
                 .asJson();
 
         logger.debug("Response status: {}", response.getStatus());
 
-        List<Label> labels = new ArrayList<>();
+        //TODO: see if can be variable instance (threadsafe)
+        ObjectMapper mapper = new ObjectMapper();
 
-        for(Object obj: response.getBody().getArray()){
-            JSONObject jsonObject = (JSONObject) obj;
-            labels.add(new Label(jsonObject.getString("id"),jsonObject.getString("name")));
-        }
+        List<BoardList> list = null;
 
-        return labels;
+        if (response.isSuccess())
+            list = Arrays.asList(mapper.readValue(response.getBody().toString(), BoardList[].class));
+        else
+            throw new RemoteServiceException(response.getStatus(), "Can not get Labels from External API.");
+
+        return list;
     }
 
-    public List<Member> getMembers()
-    {
+    public List<Member> getMembers() throws JsonProcessingException, RemoteServiceException {
         logger.info("Invoking external API for get members of the board");
 
         HttpResponse<JsonNode> response = Unirest.get(API_URL + ENDPOINT_BOARD + DEFAULT_BOARD + "/memberships")
@@ -99,20 +121,15 @@ public class TrelloServiceImpl implements CardService {
                 .queryString("token", API_TOKEN)
                 .asJson();
 
-        List<Member> members = new ArrayList<>();
+        //TODO: see if can be variable instance (threadsafe)
+        ObjectMapper mapper = new ObjectMapper();
 
-        for(Object obj: response.getBody().getArray())
-        {
-            JSONObject jsonObject = (JSONObject)obj;
-            members.add(new Member(jsonObject.getString("idMember")));
-        }
+        List<Member> list = null;
+        if (response.isSuccess())
+            list = Arrays.asList(mapper.readValue(response.getBody().toString(), Member[].class));
+        else
+            throw new RemoteServiceException(response.getStatus(), "Can not get members of board from External API.");
 
-        return members;
+        return list;
     }
-
-    //Return id of the TO-DO list if exist
-//    public String getTodoList()
-//    {
-//
-//    }
 }

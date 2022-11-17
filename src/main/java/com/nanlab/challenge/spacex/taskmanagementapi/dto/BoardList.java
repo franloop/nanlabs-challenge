@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Member
-{
-    private String idMember;
+public class BoardList {
+    private String id;
+    private String name;
+    private Boolean closed;
 }

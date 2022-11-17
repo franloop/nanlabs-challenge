@@ -25,4 +25,6 @@ public class CardRequestDTO {
     private List<Member> members;
 
     private List<Label> labels;
+
+    private BoardList boardList;
 }

@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +27,7 @@ public class TaskManagementController
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createCard(@Valid @RequestBody CardRequestDTO cardRequestDTO)
-    {
+    public ResponseEntity<String> createCard(@Valid @RequestBody CardRequestDTO cardRequestDTO) throws IOException {
         String idCard = cardBO.createCard(cardRequestDTO);
 
         if (idCard != null)
